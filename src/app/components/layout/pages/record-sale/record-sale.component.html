@@ -1,0 +1,105 @@
+<h1 style="margin: 20px 0px 0px 40px;">Record Sale</h1>
+
+<mat-card style="margin: 20px 40px 40px 40px !important; padding: 18px;">
+
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="searchSale()">
+            <div class="field-form">
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Serach By</mat-label>
+                    <mat-select formControlName="searchBy">
+                        <mat-option *ngFor="let item of optionsSerach;" [value]="item.value">
+                            {{item.description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width"
+                    *ngIf="this.form.get('searchBy')?.value == 'number'">
+                    <mat-label>Document number</mat-label>
+                    <input matInput autocomplete="off" formControlName="number">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width" *ngIf="this.form.get('searchBy')?.value == 'date'">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput autocomplete="off" [matDatepicker]="picker1" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width" *ngIf="this.form.get('searchBy')?.value == 'date'">
+                    <mat-label>End Date</mat-label>
+                    <input matInput autocomplete="off" [matDatepicker]="picker2" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" [disabled]="form.invalid"  type="submit" class="btn-search">
+                    <mat-icon mat-list-icon>search</mat-icon> Search
+                </button>
+
+            </div>
+        </form>
+
+        <mat-divider></mat-divider>
+
+        <mat-form-field class="input-filter">
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z2">
+
+            <table matSort mat-table [dataSource]="dataSaleList">
+
+                <ng-container matColumnDef="fechaRegistro">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Registration Date</th>
+                    <td mat-cell *matCellDef="let element">{{element.fechaRegistro | date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="numeroDocumento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Document number</th>
+                    <td mat-cell *matCellDef="let element">{{element.numeroDocumento}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="tipoPago">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type of pay</th>
+                    <td mat-cell *matCellDef="let element">{{element.tipoPago}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+                    <td mat-cell *matCellDef="let element">{{element.total | currency:'COP':'symbol':'1.0-0':'es-CO'}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="acciones" >
+                    <th mat-header-cell *matHeaderCellDef >Actions</th>
+                    <td mat-cell *matCellDef="let element" style="width: 128px;" >
+                        <button *ngIf="hasPermissionDetail" mat-icon-button color="primary" (click)="watchSaleDetail(element)"
+                        matTooltip="Watch detail">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsTable"></tr>
+                <tr mat-row *matRowDef="let rows; columns: columnsTable;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="5" style="text-align: center;padding: 10px;">There aren't records matching the filter {{input.value}}</td>
+                </tr>
+
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons> 
+
+            </mat-paginator>
+
+        </div>
+
+    </mat-card-content>
+
+</mat-card>

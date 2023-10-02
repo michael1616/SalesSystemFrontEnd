@@ -1,0 +1,57 @@
+<h1 style="margin: 20px 0px 0px 40px;">Dashboard</h1>
+
+<mat-card style="margin: 20px 40px 40px 40px !important; padding: 18px;">
+
+    <mat-card-content>
+        <mat-grid-list cols="3" rowHeight="100px" *ngIf="hasPermissionTotal">
+
+            <mat-grid-tile>
+                <mat-card class="card-info">
+                    <mat-card-header>
+                        <div mat-card-avatar>
+                            <mat-icon color="accent">payments</mat-icon>
+                        </div>
+                        <mat-card-title>Total Earnings</mat-card-title>
+                        <mat-card-subtitle>{{totalIncome | currency:'COP':'symbol':'1.0-0':'es-CO'}}</mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-card class="card-info">
+                    <mat-card-header>
+                        <div mat-card-avatar>
+                            <mat-icon color="warn">sell</mat-icon>
+                        </div>
+                        <mat-card-title>Total Sales</mat-card-title>
+                        <mat-card-subtitle>{{totalSales}}</mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-card class="card-info">
+                    <mat-card-header>
+                        <div mat-card-avatar>
+                            <mat-icon color="primary">collections_bookmark</mat-icon>
+                        </div>
+                        <mat-card-title>Total Products</mat-card-title>
+                        <mat-card-subtitle>{{totalProducts}}</mat-card-subtitle>
+                    </mat-card-header>
+                </mat-card>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <mat-card style="margin-top:15px;">
+            <mat-card-content *ngIf="hasPermissionGraphic">
+                <div style="width: 100%;height: 400px;">
+                    <canvas id="charBar"></canvas>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+
+    </mat-card-content>
+
+</mat-card>

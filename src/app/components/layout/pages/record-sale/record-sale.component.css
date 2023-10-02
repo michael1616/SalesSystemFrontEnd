@@ -1,0 +1,22 @@
+.field-form{
+    display: flex;
+    align-items: flex-start;
+}
+
+.btn-search{
+    width: 150px;
+    margin-top: 15px;
+}
+
+mat-form-field{
+    margin-right: 10px;
+}
+
+.input-filter{
+    width: 100%;
+    font-size: 14px;
+}
+
+mat-divider{
+    margin: 10px 0px;
+}

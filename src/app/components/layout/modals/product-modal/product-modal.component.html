@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>{{actionTitule}}</h2>
+
+<mat-dialog-content>
+
+    <form [formGroup]="form" class="full-width">
+        <mat-grid-list cols="1" rowHeight="90px">
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Name</mat-label>
+                    <input matInput  autocomplete="off" maxlength="100" formControlName="nombre">
+                    <mat-icon matSuffix>fit_screen</mat-icon>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Price</mat-label>
+                    <input matInput  autocomplete="off" formControlName="precioFormat" (input)="updateValue($event)"
+                    maxlength="13">
+                    <mat-icon matSuffix>attach_money</mat-icon>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Stock</mat-label>
+                    <input matInput  autocomplete="off"  formControlName="stock" maxlength="6">
+                    <mat-icon matSuffix>edit_square</mat-icon>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="idCategoria">
+                        <mat-option *ngFor="let category of categoriesList" [value]="category.idCategoria">
+                            {{category.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Is Active</mat-label>
+                    <mat-select formControlName="esActivo">
+                        <mat-option value="true">Active</mat-option>
+                        <mat-option value="false">No Active</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Back</button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="saveProduct()">{{btnActionText}}</button>
+</mat-dialog-actions>

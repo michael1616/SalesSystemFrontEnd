@@ -1,0 +1,115 @@
+<h1 style="margin: 20px 0px 0px 40px;">New sale</h1>
+
+<mat-card style="margin: 20px 40px 40px 40px !important; padding: 18px;">
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="addProductForSale()">
+            <mat-grid-list cols="4" rowHeight="80px">
+
+                <mat-grid-tile [colspan]="2">
+                    <mat-form-field class="full-width" appearance="fill">
+                        <mat-label>Product</mat-label>
+                        <input matInput type="text" [matAutocomplete]="auto" placeholder="Search..."
+                            formControlName="producto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                            (optionSelected)="productForSale($event)" [displayWith]="showProduct">
+                            <mat-option *ngFor="let option of productListFilter"
+                                [value]="option">{{option.nombre}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill" class="full-width" style="margin-left: 40px;">
+                        <mat-label>Amount</mat-label>
+                        <input matInput type="number" autocomplete="off" formControlName="cantidad">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <button [disabled]="form.invalid" mat-raised-button color="primary" style="width: 80%;">
+                        <mat-icon mat-list-icon>add</mat-icon> Add
+                    </button>
+                </mat-grid-tile>
+
+            </mat-grid-list>
+        </form>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2"></mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill" class="full-width" style="margin-left: 40px;">
+                    <mat-label>Type of pay</mat-label>
+                    <mat-select [(value)]="typeOfPay">
+                        <mat-option value="cash">Cash</mat-option>
+                        <mat-option value="card">Credit Card</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <button mat-raised-button color="accent" class="btn-label" >
+                    Total {{totalToPay | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+                </button>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <div class="mat-elevation-z2">
+
+            <table matSort mat-table [dataSource]="dataListSaleDetail">
+
+                <ng-container matColumnDef="producto">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+                    <td mat-cell *matCellDef="let element">{{element.descripcionProducto}}</td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="cantidad">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+                    <td mat-cell *matCellDef="let element">{{element.cantidad}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+                    <td mat-cell *matCellDef="let element">{{element.precio | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+                    <td mat-cell *matCellDef="let element">{{element.total | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                    <td mat-cell *matCellDef="let element" style="width: 90px;">
+                        <button mat-icon-button color="warn" (click)="deleteProduct(element)">
+                            <mat-icon mat-list-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnsTable"></tr>
+                <tr mat-row *matRowDef="let rows; columns: columnsTable;"></tr>
+
+            </table>
+
+        </div>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="3"></mat-grid-tile>
+            <mat-grid-tile>
+                <button mat-raised-button color="primary" style="width: 80%;"
+                [disabled]="this.productListForSale.length <= 0 || lockBtnAdd"
+                 (click)="addSale()">
+                    <mat-icon>new_label</mat-icon> Add Sale
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+
+    </mat-card-content>
+</mat-card>

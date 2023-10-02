@@ -1,0 +1,29 @@
+.card-info {
+
+    width: 48%;
+    height: auto;
+    margin-left: 10px;
+    /* display: inline-block; */
+    margin-bottom: 20px;
+}
+
+
+.mat-mdc-card-content>:last-child:not(.mat-mdc-card-footer){
+    margin-bottom: 20px;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.field-form{
+    display: flex;
+    align-items: flex-start;
+}
+
+
+.btn{
+    width: 24rem;
+    margin-top: 15px;
+    margin-left: 20px;
+}

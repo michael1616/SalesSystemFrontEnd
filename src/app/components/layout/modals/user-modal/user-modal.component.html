@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>{{actionTitule}}</h2>
+
+<mat-dialog-content >
+    <form [formGroup]="form" class="full-width">
+        <mat-grid-list cols="1" rowHeight="90px">
+            <br>
+            <br>
+            <br>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>FullName</mat-label>
+                    <input matInput  autocomplete="off" maxlength="50" formControlName="fullName">
+                    <mat-icon matSuffix>account-box</mat-icon>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input matInput  autocomplete="off" maxlength="60" formControlName="email">
+                    <mat-icon matSuffix>mail</mat-icon>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Rol</mat-label>
+                    <mat-select formControlName="idRol">
+                        <mat-option *ngFor="let rol of rolesList" [value]="rol.id">
+                            {{rol.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="dataUser != null ? false : true">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Password</mat-label>
+                    <input matInput  [type]="hidePassword ? 'password': 'text'" maxlength="50" minlength="4" formControlName="passwordHash">
+
+                    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+                        <mat-icon matSuffix>{{hidePassword ? 'visibility_off': 'visibility'}}</mat-icon>
+                    </button>
+
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Is Active</mat-label>
+                    <mat-select formControlName="isActive">
+                        <mat-option value="true">Active</mat-option>
+                        <mat-option value="false">No Active</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close color="warn">Back</button>
+    <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="saveUser()">{{btnActionText}}</button>
+</mat-dialog-actions>

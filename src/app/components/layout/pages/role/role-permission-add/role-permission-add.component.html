@@ -1,0 +1,49 @@
+<h1 style="margin: 20px 0px 0px 40px;">Add role and permissions</h1>
+
+<mat-card style="margin: 20px 40px 40px 40px !important; padding: 18px;">
+
+    <mat-card-content>
+        <div class="field-form">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Rol Name</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="roleName">
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" class="btn-add" (click)="addRol()">
+                <mat-icon mat-list-icon>add_box</mat-icon> Save
+            </button>
+        </div>
+
+
+
+        <div style="display: flex; flex-wrap: wrap;">
+            <mat-card class="card-info" *ngFor="let item of permissionList;">
+                <mat-card-header style="display: flex;justify-content: space-between;">
+                    <div mat-card-avatar style="height: 15px;">
+                        <mat-icon color="primary">view_module</mat-icon>
+                    </div>
+                    <mat-card-title>{{item.action}}</mat-card-title>
+                    <mat-checkbox [(ngModel)]="item.state" (change)="changeModule($event.checked, item)"
+                        style="margin-top: -8px; margin-right: 4px;"></mat-checkbox>
+                </mat-card-header>
+
+                <mat-list>
+                    <div style="display: flex;justify-content: space-between;"
+                        *ngFor="let action of item.childrenActions">
+                        <mat-list-item style="padding-left: 35px;">{{action.action}}</mat-list-item>
+                        <mat-checkbox (change)="changeAction($event.checked, item, action)"
+                            [disabled]="action.isDisabled" [(ngModel)]="action.state"
+                            style="margin-top: 4px;margin-right: 20px;"></mat-checkbox>
+                    </div>
+                </mat-list>
+
+            </mat-card>
+        </div>
+
+        <button mat-raised-button color="warn" class="btn-add" routerLink="/pages/role">
+            <mat-icon mat-list-icon>add_box</mat-icon> Back
+        </button>
+
+    </mat-card-content>
+
+</mat-card>

@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>Sale Detail</h2>
+
+<mat-dialog-content>
+    <mat-grid-list cols="4" rowHeight="70px">
+        <mat-grid-tile>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Registration Date</mat-label>
+                <input matInput [(ngModel)]="this.registrationDate" disabled="disabled">
+            </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Document number</mat-label>
+                <input matInput [(ngModel)]="this.documentNumber" disabled="disabled">
+            </mat-form-field>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Type of pay</mat-label>
+                <input matInput [(ngModel)]="this.typeOfPay" disabled="disabled">
+            </mat-form-field>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Total</mat-label>
+                <input matInput [(ngModel)]="this.total" disabled="disabled">
+            </mat-form-field>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+
+    <h4>Products Lits</h4>
+
+    <table matSort mat-table [dataSource]="dataListDetail" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="producto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+            <td mat-cell *matCellDef="let element">{{element.descripcionProducto}}</td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+            <td mat-cell *matCellDef="let element">{{element.cantidad}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+            <td mat-cell *matCellDef="let element">{{element.precio | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+            <td mat-cell *matCellDef="let element">{{element.total | currency:'COP':'symbol':'1.0-0':'es-CO'}}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsTable"></tr>
+        <tr mat-row *matRowDef="let rows; columns: columnsTable;"></tr>
+
+    </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close cdkFocusInitial color="warn">Back</button>
+</mat-dialog-actions>
